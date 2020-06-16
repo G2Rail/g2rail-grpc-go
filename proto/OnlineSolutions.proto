@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "OnlineSolutionsProto";
+option go_package = "g2rail";
+
+package g2rail;
+
+// Interface exported by the server.
+service OnlineSolutions { 
+  // Send a search request
+  rpc Search (SearchRequest) returns (AsyncKeyResponse);
+  // Service to query async result by using the async key
+  rpc QueryAsyncOnlineSolutions (OnlineSolutionsAsyncQueryRequest) returns (OnlineSolutionsResponse);
+}
+
+message SearchRequest {
+  string from = 1;
+  string to = 2;
+  string date = 3;
+  string time = 4;
+  uint32 adult = 5;
+  uint32 child = 6;
+}
+
+message AsyncKeyResponse {
+  string async_key = 1;
+}
+
+message OnlineSolutionsAsyncQueryRequest {
+  string async_key = 1;
+}
+
+message OnlineSolutionsResponse {
+  repeated RailwaySolution railway_solutions = 1;
+}
+
+message RailwaySolution {
+  Railway railway = 1;
+  bool loading = 2;
+  repeated Solution solutions = 3;
+}
+
+message Railway {
+  string code =1;
+}
+
+message Station {
+  string name = 1;
+  string code = 2;
+  string help_url = 3;
+}
+
+message Duration {
+  uint32 hour = 1;
+  uint32 minutes = 2;
+}
+
+message Solution {
+  Station from = 1;
+  Station to  = 2;
+  string departure = 3;
+  uint32 transfer_times = 4;
+  Duration duration = 5;
+  repeated Section sections = 6;
+}
+
+message Section  {
+  string carrier_code = 1;
+  string carrier_description = 2;
+  string carrier_icon = 3;
+  repeated Offer offers = 4;
+  repeated Train trains = 5;
+}
+
+message Offer  {
+  string code = 1;
+  string description = 2;
+  string detail = 3;
+  string help_url = 4;
+  string restriction = 5;
+  string ticket_type = 6;
+  string seat_type = 7;
+  string refund_type = 8;
+  string confirm_again = 9;
+  string change_type = 10;
+  repeated Service services = 11;
+}
+
+message Service {
+  Price price = 31;
+  Price average_unit_price = 32;
+  Availability available = 33;
+  string code = 1;
+  string description = 2;
+  string detail = 3;
+  string feature_photo = 4;
+  string booking_code = 5;
+  string booking_type = 6;
+  string has_wifi = 7;
+  string has_power_outlet = 8;
+  string has_air_conditioning = 9;
+  string has_entertainment_system = 10;
+  string has_reading_light = 11;
+  string seat_reservation = 12;
+  string seat_type = 13;
+  string number_of_seats_per_row = 14;
+  string bed_type = 15;
+  string toilet_type = 16;
+  string food_service_type = 17;
+  string food_drinks = 18;
+  string free_megazine = 19;
+  string cleaning_kit = 20;
+  string welcome_kit = 21;
+  string lounge_service = 22;
+  string check_in = 23;
+  string silent_area = 24;
+  string private_cabin = 25;
+  string play_area = 26;
+  string bicycle_space = 27;
+  string disabled_facilities = 28;
+  string morning_call = 29;
+  string help_url = 30;
+}
+
+message Availability {
+  uint32 seats = 1;
+}
+
+message Price {
+  string currency = 1;
+  uint32 cents = 2;
+}
+
+message Train {
+  Station from = 1;
+  Station to = 2;
+  string number = 3;
+  string type = 4;
+  string help_url = 5;
+  string departure = 6;
+  string arrival = 7;
+}
