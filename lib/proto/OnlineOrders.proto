@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "OnlineOrdersProto";
+option csharp_namespace = "G2Rail.Protobuf";
+option go_package = "g2rail";
+import "lib/proto/Common.proto";
+package g2rail;
+
+// Interface exported by the server.
+service OnlineOrders { 
+  // Send a search request
+  rpc Book (BookRequest) returns (AsyncKeyResponse);
+  // Service to query async result by using the async key
+  rpc QueryAsyncOnlineOrder (OnlineOrderAsyncQueryRequest) returns (OnlineOrderResponse);
+}
+
+message BookRequest {
+  bool seat_reserved = 1;
+  repeated string sections = 2;
+  repeated Passenger passengers = 3;
+}
+
+message Passenger {
+  enum Gender {
+    male = 0;
+    female = 1;
+  }
+  Gender gender = 1;
+  string id = 8;
+  string phone = 2;
+  string last_name = 3;
+  string first_name = 4;
+  string birthdate = 5;
+  string email = 6;
+  string passport = 7;
+}
+
+message OnlineOrderAsyncQueryRequest {
+  string async_key = 1;
+}
+
+message OnlineOrderResponse {
+  string id = 1;
+  bool loading = 14;
+  bool offline_fulfillment = 15;
+  string train_description = 16;
+  Railway railway = 2;
+  Station from = 3;
+  Station to = 4;
+  string departure = 5;
+  string arrival = 6;
+  Price ticket_price = 7;
+  Price payment_price = 8;
+  Price charging_price = 9;
+  Price rebate_amount = 10;
+  repeated Train trains = 17;
+  repeated Passenger passengers = 11;
+  repeated Ticket tickets = 12;
+  repeated PriceDetail records = 13;
+}
+
+message Ticket {
+  string id = 1;
+  Station from = 2;
+  Station to = 3;
+  Price price = 4;
+}
+
+message PriceDetail {
+  string id = 1;
+  Price amount = 2;
+  string type = 3;
+  string category = 4;
+  string target = 5;
+}
+

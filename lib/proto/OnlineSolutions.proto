@@ -3,7 +3,10 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "io.grpc.g2rail";
 option java_outer_classname = "OnlineSolutionsProto";
+option csharp_namespace = "G2Rail.Protobuf";
 option go_package = "g2rail";
+
+import "lib/proto/Common.proto";
 
 package g2rail;
 
@@ -24,10 +27,6 @@ message SearchRequest {
   uint32 child = 6;
 }
 
-message AsyncKeyResponse {
-  string async_key = 1;
-}
-
 message OnlineSolutionsAsyncQueryRequest {
   string async_key = 1;
 }
@@ -40,16 +39,6 @@ message RailwaySolution {
   Railway railway = 1;
   bool loading = 2;
   repeated Solution solutions = 3;
-}
-
-message Railway {
-  string code =1;
-}
-
-message Station {
-  string name = 1;
-  string code = 2;
-  string help_url = 3;
 }
 
 message Duration {
@@ -126,19 +115,4 @@ message Service {
 
 message Availability {
   uint32 seats = 1;
-}
-
-message Price {
-  string currency = 1;
-  uint32 cents = 2;
-}
-
-message Train {
-  Station from = 1;
-  Station to = 2;
-  string number = 3;
-  string type = 4;
-  string help_url = 5;
-  string departure = 6;
-  string arrival = 7;
 }

@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"time"
 
 	"g2rail-grpc-go/client"
-	"g2rail-grpc-go/g2rail"
+	g2rail "g2rail-grpc-go/g2rail/lib/proto"
 
 	"google.golang.org/grpc"
 )
@@ -38,16 +39,38 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot dial server: ", err)
 	}
+
 	onlineSolutionsClient := client.NewOnlineSolutionsClient(cc2)
 	asyncKey := onlineSolutionsClient.Search()
-
+	var solutions []*g2rail.RailwaySolution
+	var bookingCode string
 	for {
 		time.Sleep(2 * time.Second)
-		solutions := onlineSolutionsClient.QueryAsyncOnlineSolutions(asyncKey)
+		solutions = onlineSolutionsClient.QueryAsyncOnlineSolutions(asyncKey)
 		if !resultIsLoading(solutions) {
 			break
 		}
 	}
+	if len(solutions) == 0 {
+		fmt.Println("No result found!")
+		return
+	}
+
+	bookingCode = solutions[0].Solutions[0].Sections[0].Offers[1].Services[0].BookingCode
+	onlineOrderClient := client.NewOnlineOrdersClient(cc2)
+
+	asyncKey = onlineOrderClient.Book(bookingCode)
+	// asyncKey := onlineOrderClient.Book("P_8GKRW0")
+	var onlineOrder *g2rail.OnlineOrderResponse
+	for {
+		onlineOrder = onlineOrderClient.QueryAsyncOnlineOrder(asyncKey)
+		if !onlineOrder.Loading {
+			break
+		}
+		time.Sleep(2 * time.Second)
+	}
+	fmt.Println(onlineOrder)
+
 }
 
 func resultIsLoading(solutions []*g2rail.RailwaySolution) bool {

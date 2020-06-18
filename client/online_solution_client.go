@@ -2,7 +2,7 @@ package client
 
 import (
 	"context"
-	"g2rail-grpc-go/g2rail"
+	g2rail "g2rail-grpc-go/g2rail/lib/proto"
 	"log"
 	"time"
 
