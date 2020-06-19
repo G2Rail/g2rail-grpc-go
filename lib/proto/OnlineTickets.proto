@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "OnlineTicketsProto";
+option csharp_namespace = "G2Rail.Protobuf";
+option go_package = "g2rail";
+
+package g2rail;
+
+// Interface exported by the server, it allows download pdf tickets or mobile tickets.
+service OnlineTickets { 
+  // Send a tickets downloading request
+  rpc Download (DownloadRequest) returns (TicketsResponse);
+}
+
+message DownloadRequest {
+  string order_id = 1;
+}
+
+message TicketsResponse {
+  repeated TicketFile files = 1;
+}
+
+message TicketFile {
+  enum TicketType {
+    pdf_ticket = 0;
+    mobile_ticket = 1;
+  }
+  string file = 1;
+  TicketType type = 2;
+}
+

@@ -82,6 +82,10 @@ func main() {
 		}
 		time.Sleep(2 * time.Second)
 	}
+
+	onlineTicketsClient := client.NewOnlineTicketsClient(cc2)
+	tickets := onlineTicketsClient.Download(onlineOrder.Id)
+	fmt.Println(tickets)
 }
 
 func resultIsLoading(solutions []*g2rail.RailwaySolution) bool {
