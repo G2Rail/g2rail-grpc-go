@@ -36,3 +36,33 @@ message Train {
   string departure = 6;
   string arrival = 7;
 }
+
+message Ticket {
+  string id = 1;
+  Station from = 2;
+  Station to = 3;
+  Price price = 4;
+}
+
+message PriceDetail {
+  string id = 1;
+  Price amount = 2;
+  string type = 3;
+  string category = 4;
+  string target = 5;
+}
+
+message Passenger {
+  enum Gender {
+    male = 0;
+    female = 1;
+  }
+  Gender gender = 1;
+  string id = 8;
+  string phone = 2;
+  string last_name = 3;
+  string first_name = 4;
+  string birthdate = 5;
+  string email = 6;
+  string passport = 7;
+}

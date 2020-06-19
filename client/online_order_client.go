@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// OnlineOrdersClient is a client to call online solutions service RPCs
+// OnlineOrdersClient is a client to call online order service RPCs
 type OnlineOrdersClient struct {
 	service g2rail.OnlineOrdersClient
 }

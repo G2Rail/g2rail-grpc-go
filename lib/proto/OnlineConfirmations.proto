@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "OnlineConfirmationsProto";
+option csharp_namespace = "G2Rail.Protobuf";
+option go_package = "g2rail";
+import "lib/proto/Common.proto";
+package g2rail;
+
+// Interface to confirm a reservation.
+service OnlineConfirmations { 
+  // Send a confirm request
+  rpc Confirm (ConfirmRequest) returns (AsyncKeyResponse);
+  // Service to query async result by using the async key
+  rpc QueryAsyncOnlineConfirmation (OnlineConfirmationAsyncQueryRequest) returns (OnlineConfirmationResponse);
+}
+
+message ConfirmRequest {
+  string order_id = 1;
+}
+
+message OnlineConfirmationAsyncQueryRequest {
+  string async_key = 1;
+}
+
+message OnlineConfirmationResponse {
+  string id = 1;
+  string confirm_again = 3;
+  Order order = 4;
+  Price ticket_price = 8;
+  Price payment_price = 9;
+  Price charging_price = 10;
+  Price rebate_amount = 11;
+
+  repeated PriceDetail records = 15;
+  bool loading = 16;
+  bool offline_fulfillment = 17;
+  string train_description = 18;
+}
+
+message Order {
+  string id = 1;
+  Railway railway = 2;
+  bool offline_fulfillment = 3;
+  string train_description = 4;
+  Station from = 5;
+  Station to = 6;
+  string departure = 7;
+  string arrival = 8;
+  string PNR = 9;
+  repeated Train trains = 12;
+  repeated Passenger passengers = 13;
+  repeated Ticket tickets = 14;
+}
+

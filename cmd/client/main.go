@@ -71,6 +71,17 @@ func main() {
 	}
 	fmt.Println(onlineOrder)
 
+	onlineConfimationClient := client.NewOnlineConfirmationsClient(cc2)
+	asyncKey = onlineConfimationClient.Confirm(onlineOrder.Id)
+
+	var onlineConfirmation *g2rail.OnlineConfirmationResponse
+	for {
+		onlineConfirmation = onlineConfimationClient.QueryAsyncOnlineConfirmation(asyncKey)
+		if !onlineConfirmation.Loading {
+			break
+		}
+		time.Sleep(2 * time.Second)
+	}
 }
 
 func resultIsLoading(solutions []*g2rail.RailwaySolution) bool {
