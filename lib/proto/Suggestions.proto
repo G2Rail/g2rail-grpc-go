@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "SuggestionsProto";
+option csharp_namespace = "G2Rail.Protobuf";
+option go_package = "g2rail";
+
+package g2rail;
+
+// Interface exported by the server, it allows query a station/city suggestion by a given query.
+service Suggestions { 
+  // Send a tickets downloading request
+  rpc Query (SuggestionRequest) returns (SuggestionsResponse);
+}
+
+message SuggestionRequest {
+  string query = 1;
+  string departure = 2;
+}
+
+message SuggestionsResponse {
+  repeated Suggestion suggestions = 1;
+}
+
+message Suggestion {
+  string code = 1;
+  string value = 2;
+  string to_code = 3;
+  string to_value = 4;
+}
+

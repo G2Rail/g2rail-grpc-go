@@ -40,6 +40,12 @@ func main() {
 		log.Fatal("cannot dial server: ", err)
 	}
 
+	suggestionClient := client.NewSuggestionsClientsClient(cc2)
+
+	suggestions := suggestionClient.Query("BERLIN")
+
+	fmt.Println(suggestions)
+
 	onlineSolutionsClient := client.NewOnlineSolutionsClient(cc2)
 	asyncKey := onlineSolutionsClient.Search()
 	var solutions []*g2rail.RailwaySolution
