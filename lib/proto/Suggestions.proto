@@ -10,7 +10,7 @@ package g2rail;
 
 // Interface exported by the server, it allows query a station/city suggestion by a given query.
 service Suggestions { 
-  // Send a tickets downloading request
+  // Send a station query request
   rpc Query (SuggestionRequest) returns (SuggestionsResponse);
 }
 
