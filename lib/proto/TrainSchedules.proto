@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.g2rail";
+option java_outer_classname = "TrainSchedulesProto";
+option csharp_namespace = "G2Rail.Protobuf";
+option go_package = "g2rail";
+
+package g2rail;
+
+// Interface exported by the server, it allows query a train schedule and real time departure information.
+service TrainSchedules { 
+  // Retrieve real time departure information of a given station
+  rpc DepartureBoard (DepartureBoardRequest) returns (DepartureBoardResponse);
+  // Retrieve a train schedule information of a given station
+  rpc Schedule (ScheduleRequest) returns (ScheduleResponse);
+}
+
+message DepartureBoardRequest {
+  string station_code = 1;
+}
+
+message DepartureBoardResponse {
+  repeated Departure departures = 1;
+}
+
+message Departure {
+  string departure_code = 1;
+  string departure_name = 2;
+  string destination_code = 3;
+  string destination_name = 4;
+  string planned_dep_hour_min = 5;
+  string actual_dep_hour_min = 6;
+  string planned_arr_hour_min = 7;
+  string actual_arr_hour_min = 8;
+  string train_number = 9;
+  string via = 10;
+  string platform = 11;
+  string message = 12; // Cancel or platform change message.
+}
+
+message ScheduleRequest {
+  string carrier = 1;
+  string train_number = 2;
+  // If not given, will return latest schedule.
+  string date = 3; 
+}
+
+message ScheduleResponse {
+  string train_number = 1;
+  string carrier_code = 2;
+  string carrier_name = 3;
+  repeated Schedule schedule_items = 4;
+}
+
+message Schedule {
+  string platform = 1;
+  string planned_arr_hour_min = 2;
+  string planned_dep_hour_min = 3;
+  string actual_arr_hour_min = 4;
+  string actual_dep_hour_min = 5;
+  string station_name = 8;
+  string station_code = 9;
+}

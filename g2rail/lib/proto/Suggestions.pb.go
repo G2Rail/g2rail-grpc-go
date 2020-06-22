@@ -213,7 +213,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type SuggestionsClient interface {
-	// Send a tickets downloading request
+	// Send a station query request
 	Query(ctx context.Context, in *SuggestionRequest, opts ...grpc.CallOption) (*SuggestionsResponse, error)
 }
 
@@ -236,7 +236,7 @@ func (c *suggestionsClient) Query(ctx context.Context, in *SuggestionRequest, op
 
 // SuggestionsServer is the server API for Suggestions service.
 type SuggestionsServer interface {
-	// Send a tickets downloading request
+	// Send a station query request
 	Query(context.Context, *SuggestionRequest) (*SuggestionsResponse, error)
 }
 
