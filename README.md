@@ -23,6 +23,7 @@ make gen
 ```bash
 ADDRESS=api.g2rail.com APIKEY=api_key_from_g2rail SECRET=api_secret_from_g2rail make client
 ```
+Please contact us to get an API Key and Secret, then copy the `.env.example` file to `.env`, set the `API_KEY` and `API_SECRET` accordingly. Then update in the client class, run the main method, you'll get the result. 
 
 # Supporting API
 
