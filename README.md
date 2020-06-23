@@ -32,6 +32,8 @@ In addition to booking API, there are also support APIs such as station departur
 
 [Realtime update of DB ICE 1088 from Kassel to Frankfurt Hbf](https://help.g2rail.com/zh-cn/railways/db/carriers/db-intercity-express/trains/ICE1088)
 
+[Proto files](https://github.com/G2Rail/g2rail-grpc-go/tree/master/g2rail/lib/proto) 
+
 Support API include:
 
 ### Suggestion
