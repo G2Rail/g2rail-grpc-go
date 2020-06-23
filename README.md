@@ -12,19 +12,19 @@ In addition, the API suite is built upon a consolidated ground transportation do
 
 This Repository Calls G2Rail Ground Transportation APIs. It is provided in Go lang.
 
-# To generate the protobuf code
+### To generate the protobuf code
 
 ```bash
 make gen
 ```
 
-# How to run it?
+### How to run it?
 
 ```bash
 ADDRESS=api.g2rail.com APIKEY=api_key_from_g2rail SECRET=api_secret_from_g2rail make client
 ```
 
-## Supporting API
+# Supporting API
 
 In addition to booking API, there are also support APIs such as station departure, train update.
 
